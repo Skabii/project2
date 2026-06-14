@@ -49,7 +49,6 @@ void draw() {
 
   //init game graphic
   gameGraphic.beginDraw();
-  gameGraphic.background(200);
 
   //game logic
   if (gameState == 0) {
@@ -93,6 +92,7 @@ void draw() {
 
   //render
   if (gameState == 0 || gameState == 1) {
+    gameGraphic.background(200);
     board.render();
     for (int i=balls.size()-1; i>=0; i--) {
       balls.get(i).render();
@@ -104,30 +104,43 @@ void draw() {
   gameGraphic.endDraw();
 
   //display game graphic to window
-  imageMode(CENTER);
-  image(gameGraphic, width/2, height/2, gameScreenSize, gameScreenSize);
-  textSize(64);
-  text(frameRate, 10, 64);
+  if (gameState == 0 || gameState == 1 || gameState == 2) {
+    imageMode(CENTER);
+    image(gameGraphic, width/2, height/2, gameScreenSize, gameScreenSize);
+    textSize(64);
+    text(frameRate, 10, 64);
+  }
 
   //hud render
   pushStyle();
-  textSize(width/10);
+  textSize(width/16);
   textAlign(CENTER);
-  fill(16, 200, 16);
+  fill(0);
   if (gameState == 0) {
-    text("CLICK TO START", width/2, height/2);
+    text("CLICK TO START", width/2, height*3/4);
   } else if (gameState == 1) {
     pushStyle();
     textSize(gameScreenSize/10);
-    textAlign(CENTER, BOTTOM);
-    text(timeLeft/60, width/2, height);
+    textAlign(CENTER, TOP);
+    text(timeLeft/60, width/2, 0);
     popStyle();
   } else if (gameState == 2) {
+    pushStyle();
+    noStroke();
+    fill(0,127);
+    rect(0, height*1/3, width, height*1/3);
+    popStyle();
     text("LEVEL CLEAR\nCLICK TO CONTINUE", width/2, height/2);
   } else if (gameState == 3) {
+    pushStyle();
+    fill(200,0,0);
     text("GAME OVER\nCLICK TO RESTART", width/2, height/2);
+    popStyle();
   } else if (gameState == 4) {
+    pushStyle();
+    fill(200,200,127);
     text("GAME CLEAR!!\nCLICK TO RESTART", width/2, height/2);
+    popStyle();
   }
   popStyle();
 

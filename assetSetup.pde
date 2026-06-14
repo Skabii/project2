@@ -7,6 +7,8 @@ PImage shieldImg;
 
 JSONArray levels;
 
+PFont myFont;
+
 class GameSoundEffect {
     SoundFile sound;
     boolean disabled;
@@ -39,6 +41,9 @@ void assetSetup() {
   tileTableSetup();
 
   levels = loadJSONArray("levels.json");
+
+  myFont = createFont("bitcountsingle.ttf",displayWidth/8);
+  textFont(myFont);
 
   hit = new GameSoundEffect(new SoundFile(this,"hit.wav"));
   hit2 = new GameSoundEffect(new SoundFile(this,"hit2.wav"));
