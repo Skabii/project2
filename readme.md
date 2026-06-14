@@ -4,11 +4,7 @@
 전부 다 깨면 다음 맵으로 넘어감
 
 맵 형식
-oooo
-xxxx
-oooo
-xxxx
-oooo
+oooo\nxxxx\noooo\nxxxx\noooo
 
 현재 구현된 타일 종류
 o : 일반 타일, 닿으면 깨짐
