@@ -33,7 +33,7 @@ void setup() {
 
   balls = new ArrayList<PlayerBall>();
 
-  ballMaxSpeed = gameGraphic.width/320;
+  ballMaxSpeed = gameGraphic.width/200;
   ballSize = gameGraphic.width/25;
   addBall();
 

@@ -48,7 +48,7 @@ class PlayerBall extends Sprite {
       if (dpos.y > 0) {
         dpos.y *= -1;
       }
-      dpos.x = map(pos.x, thisBar.pos.x-thisBar.w/2, thisBar.pos.x+thisBar.w/2, -gameGraphic.width/200, gameGraphic.width/200);
+      dpos.x = map(pos.x, thisBar.pos.x-thisBar.w/2, thisBar.pos.x+thisBar.w/2, -ballMaxSpeed, ballMaxSpeed);
     }
     if (dpos.x>0) {
       dpos.x += ballMaxSpeed/1000;
