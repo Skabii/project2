@@ -6,7 +6,7 @@ void tileTableSetup() {
   tileTable.put("+", new TileAddBall());
   tileTable.put("*", new TileMultiBall());
   tileTable.put("s", new TileShield());
-
+  tileTable.put(">", new TileSpeedBall());
   //tileTable.put("?", new Tile타일이름()); //?를 아무 글자 한글자로 교체
 }
 
@@ -122,3 +122,22 @@ class TileShield extends Tile {
     return new TileShield();
   }
 }
+
+
+class TileSpeedBall extends Tile {
+  TileSpeedBall() {
+    tileInit(sppedBallImg); //brickImg를 다른 PImage로 바꾸면 외형이 그 이미지로 나타남
+    this.clearRequirement = true; //true면 이 타일을 깨야 클리어 판정, false면 이 타일은 안깨도 클리어 판정
+  }
+  void hit(PlayerBall thisBall) { //공이 닿았을때 행동, thisBall은 닿은 공 객체
+    if (active) { //활성화 (파괴 전) 상태면
+      addSppedBall(2);
+      active = false; //이 타일을 파괴
+    }
+  }
+  TileSpeedBall copy() { //맨 처음에 맵 생성할때 쓰이는 함수, 타일이름이 클래스에서의 이름이랑 같아야 함
+    return new TileSpeedBall();
+  }
+}
+
+

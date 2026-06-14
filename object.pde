@@ -66,6 +66,44 @@ class PlayerBall extends Sprite {
     gameGraphic.popStyle();
   }
 }
+class SppedPlayerBall extends PlayerBall {
+  float size;
+  color col;
+  boolean active;
+  float ballMaxSpeed_epic;
+  SppedPlayerBall(float x, float y, float dx, float dy, float size, color col) {
+    super(x, y, dx, dy,size,col);
+  }
+  void update(Bar thisBar) {
+    super.update(thisBar);
+    if (pos.y-size/2 >= gameGraphic.height) {
+      active = false;
+    }
+    if (active) {
+      if (pos.x+size/2 >= gameGraphic.width || pos.x-size/2 <= 0) {
+        dpos.x *= -1;
+      }
+      if (pos.y-size/2 <= 0) {
+        dpos.y *= -1;
+      }
+    }
+
+    if (thisBar.checkBallHit(this)) {
+      bounce.play();
+      if (dpos.y > 0) {
+        dpos.y *= -1;
+      }
+      dpos.x = map(pos.x, thisBar.pos.x-thisBar.w/2, thisBar.pos.x+thisBar.w/2, -gameGraphic.width/100, gameGraphic.width/100);
+    }
+    if (dpos.x>0) {
+      dpos.x += ballMaxSpeed/500;
+    } else {
+      dpos.x -= ballMaxSpeed/500;
+    }
+    update();
+    super.update();
+  }
+}
 
 class Bar extends Sprite {
   float w, h;
@@ -258,6 +296,14 @@ void addBall(int num) {
   }
 }
 
+void addSppedBall(int num) {
+  for (int i=0; i<num; i++) {
+    if (balls.size() < 1000) {
+
+      balls.add(new SppedPlayerBall(gameGraphic.width/2, barY-bar.h, random(-ballMaxSpeed -gameGraphic.width/100, ballMaxSpeed +gameGraphic.width/100), -gameGraphic.width/200, ballSize, color(255, 255, 0)));
+    }
+  }
+}
 void multiBall(int num, PlayerBall thisBall) {
   for (int i=0; i<num; i++) {
     if (balls.size() < 1000) {

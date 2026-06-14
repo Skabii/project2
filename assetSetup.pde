@@ -8,7 +8,7 @@ PImage shieldImg;
 JSONArray levels;
 
 PFont myFont;
-
+PImage sppedBallImg;
 class GameSoundEffect {
     SoundFile sound;
     boolean disabled;
@@ -37,6 +37,7 @@ void assetSetup() {
   addBallImg = loadImage("addBall.png");
   multiBallImg = loadImage("multiBall.png");
   shieldImg = loadImage("shield.png");
+  sppedBallImg= loadImage("Yellow.png");
 
   tileTableSetup();
 
