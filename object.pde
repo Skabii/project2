@@ -35,9 +35,11 @@ class PlayerBall extends Sprite {
     if (active) {
       if (pos.x+size/2 >= gameGraphic.width || pos.x-size/2 <= 0) {
         dpos.x *= -1;
+        pos.x = constrain(pos.x,size/2,gameGraphic.width-size/2);
       }
       if (pos.y-size/2 <= 0) {
         dpos.y *= -1;
+        pos.y = max(size/2,pos.y);
       }
     }
 
@@ -75,7 +77,7 @@ class Bar extends Sprite {
     this.col = col;
   }
   void update() {
-    pos.x = lerp(pos.x,map(mouseX, width/2-gameScreenSize/2, width/2+gameScreenSize/2, 0, gameGraphic.width),0.1);
+    pos.x = lerp(pos.x, map(mouseX, width/2-gameScreenSize/2, width/2+gameScreenSize/2, 0, gameGraphic.width), 0.1);
   }
   void render() {
 
@@ -165,6 +167,14 @@ class TileSet {
     tileW = (float) w/tileArray[0].length;
     tileH = (float) h/tileArray.length;
   }
+  Tile getTileOrNull(int x, int y) {
+    try {
+      return tileArray[y][x];
+    }
+    catch (IndexOutOfBoundsException e) {
+      return null;
+    }
+  }
   void update(ArrayList<PlayerBall> balls) {
     updateSize();
     cleared = true;
@@ -176,32 +186,38 @@ class TileSet {
           float tileY = tileH*y;
           if (thisLine[x].clearRequirement) {
             cleared = false;
-            println(x);
-            println(y);
-            println();
           }
           for (int i=balls.size()-1; i>=0; i--) {
             PlayerBall thisBall = balls.get(i);
             // if (inRange(thisBall.pos.x, tileX-thisBall.size/2, tileX+tileW+thisBall.size/2) && inRange(thisBall.pos.y, tileY-thisBall.size/2, tileY+tileH+thisBall.size/2) ) {
-            if (inRange(thisBall.pos.x, tileX, tileX+tileW) && inRange(thisBall.pos.y, tileY, tileY+tileH) ) {
+            if (inRange(thisBall.pos.x, tileX-thisBall.size/2, tileX+tileW+thisBall.size/2) && inRange(thisBall.pos.y, tileY-thisBall.size/2, tileY+tileH+thisBall.size/2) ) {
               thisLine[x].hit(thisBall);
               PVector displacement = thisBall.pos.copy();
               displacement.sub(tileX+tileW/2., tileY+tileH/2.);
               displacement.x = displacement.x / tileW;
               displacement.y = displacement.y / tileH;
+              if (getTileOrNull(x-1, y) != null) {
+                displacement.x = max(displacement.x,0);
+              } else if (getTileOrNull(x+1, y) != null) {
+                displacement.x = min(displacement.x,0);
+              } else if (getTileOrNull(x, y-1) != null) {
+                displacement.y = max(displacement.y,0);
+              } else if (getTileOrNull(x,y+1) != null) {
+                displacement.y = min(displacement.y,0);
+              }
               if (abs(displacement.x) > abs(displacement.y)) {
                 thisBall.dpos.x *= -1;
                 if (displacement.x < 0) {
-                  thisBall.pos.x = tileX;
+                  thisBall.pos.x = tileX-thisBall.size/2;
                 } else {
-                  thisBall.pos.x = tileX+tileW;
+                  thisBall.pos.x = tileX+tileW+thisBall.size/2;
                 }
               } else {
                 thisBall.dpos.y *= -1;
                 if (displacement.y < 0) {
-                  thisBall.pos.y = tileY;
+                  thisBall.pos.y = tileY-thisBall.size/2;
                 } else {
-                  thisBall.pos.y = tileY+tileH;
+                  thisBall.pos.y = tileY+tileH+thisBall.size/2;
                 }
               }
             }
