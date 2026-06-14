@@ -5,7 +5,7 @@ PImage addBallImg;
 PImage multiBallImg;
 PImage shieldImg;
 PImage sppedBallImg;
-
+PImage BoomImg;
 JSONArray levels;
 
 PFont myFont;
@@ -39,7 +39,7 @@ void assetSetup() {
   multiBallImg = loadImage("multiBall.png");
   shieldImg = loadImage("shield.png");
   sppedBallImg= loadImage("Yellow.png");
-
+  BoomImg= loadImage("Boom.png");
   tileTableSetup();
 
   levels = loadJSONArray("levels.json");

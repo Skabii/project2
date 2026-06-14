@@ -7,6 +7,7 @@ void tileTableSetup() {
   tileTable.put("*", new TileMultiBall());
   tileTable.put("s", new TileShield());
   tileTable.put(">", new TileSpeedBall());
+  tileTable.put("i", new TileBoom());
   //tileTable.put("?", new Tile타일이름()); //?를 아무 글자 한글자로 교체
 }
 
@@ -138,6 +139,82 @@ class TileSpeedBall extends Tile {
   }
   TileSpeedBall copy() { //맨 처음에 맵 생성할때 쓰이는 함수, 타일이름이 클래스에서의 이름이랑 같아야 함
     return new TileSpeedBall();
+  }
+}
+
+class TileBoom extends Tile {
+  TileBoom() {
+    tileInit(BoomImg); //brickImg를 다른 PImage로 바꾸면 외형이 그 이미지로 나타남
+    this.clearRequirement = false; //true면 이 타일을 깨야 클리어 판정, false면 이 타일은 안깨도 클리어 판정
+  }
+
+  void hit(PlayerBall thisBall) { //공이 닿았을때 행동, thisBall은 닿은 공 객체
+    if (active) { //활성화 (파괴 전) 상태면
+      for (int y=0; y<board.tileArray.length; y++) {
+        if (!active){return;}
+        Tile[] thisLine = board.tileArray[y];
+        for (int x=0; x<thisLine.length; x++) {
+          if (!active){return;}
+          if (thisLine[x] != null) {
+            //자기자신 찾기
+            if (thisLine[x]== this) {
+              //
+              println(thisLine[x]);
+              active = false;
+              if(y-1>=0&&board.tileArray[y-1]!=null){
+                thisLine =board.tileArray[y-1];
+                if(x-1>=0&&thisLine[x-1]!=null){
+                  thisLine[x-1].hit(thisBall);
+                }
+                if(thisLine[x]!=null){
+                  thisLine[x].hit(thisBall);
+                }
+                if(x+1<thisLine.length&&thisLine[x+1]!=null){
+                  thisLine[x+1].hit(thisBall);
+                }
+              }
+              //
+              if(board.tileArray[y]!=null){
+                thisLine =board.tileArray[y];
+                if(x-1>=0&&thisLine[x-1]!=null){
+                  thisLine[x-1].hit(thisBall);
+                }
+                if(thisLine[x]!=null){
+                  thisLine[x].hit(thisBall);
+                }
+                if(x+1<thisLine.length&&thisLine[x+1]!=null){
+                  thisLine[x+1].hit(thisBall);
+                }
+              }
+              //
+              if(y+1<board.tileArray.length&&board.tileArray[y+1]!=null){
+                thisLine =board.tileArray[y+1];
+                if(x-1>=0&&thisLine[x-1]!=null){
+                  thisLine[x-1].hit(thisBall);
+                }
+                if(thisLine[x]!=null){
+                  thisLine[x].hit(thisBall);
+                }
+                if(x+1<thisLine.length&&thisLine[x+1]!=null){
+                  thisLine[x+1].hit(thisBall);
+                }
+              }
+              break;
+            }
+            //실행
+          }
+          //null확인    
+        }
+        //for문x
+    }
+    //for문 y
+    active = false;
+  }
+  //active
+ //이 타일을 파괴  
+  }
+  TileBoom copy() { //맨 처음에 맵 생성할때 쓰이는 함수, 타일이름이 클래스에서의 이름이랑 같아야 함
+    return new TileBoom();
   }
 }
 
