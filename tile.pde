@@ -89,7 +89,7 @@ class TileMultiBall extends Tile {
   void hit(PlayerBall thisBall) {
     if (active) {
       coin.play();
-      multiBall(2, thisBall);
+      multiBall(2);
       active = false;
     }
   }
