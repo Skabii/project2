@@ -36,11 +36,11 @@ class PlayerBall extends Sprite {
     if (active) {
       if (pos.x+size/2 >= gameGraphic.width || pos.x-size/2 <= 0) {
         dpos.x *= -1;
-        pos.x = constrain(pos.x,size/2,gameGraphic.width-size/2);
+        pos.x = constrain(pos.x, size/2, gameGraphic.width-size/2);
       }
       if (pos.y-size/2 <= 0) {
         dpos.y *= -1;
-        pos.y = max(size/2,pos.y);
+        pos.y = max(size/2, pos.y);
       }
     }
 
@@ -198,13 +198,13 @@ class TileSet {
               displacement.x = displacement.x / tileW;
               displacement.y = displacement.y / tileH;
               if (getTileOrNull(x-1, y) != null) {
-                displacement.x = max(displacement.x,0);
+                displacement.x = max(displacement.x, 0);
               } else if (getTileOrNull(x+1, y) != null) {
-                displacement.x = min(displacement.x,0);
+                displacement.x = min(displacement.x, 0);
               } else if (getTileOrNull(x, y-1) != null) {
-                displacement.y = max(displacement.y,0);
-              } else if (getTileOrNull(x,y+1) != null) {
-                displacement.y = min(displacement.y,0);
+                displacement.y = max(displacement.y, 0);
+              } else if (getTileOrNull(x, y+1) != null) {
+                displacement.y = min(displacement.y, 0);
               }
               if (abs(displacement.x) > abs(displacement.y)) {
                 thisBall.dpos.x *= -1;
@@ -253,22 +253,25 @@ void addBall() {
 }
 
 void addBall(int num) {
-  addBall(num,ballMaxSpeed, color(255,0,0));
+  addBall(num, ballMaxSpeed, color(255, 0, 0));
 }
 
 void addBall(int num, float maxSpeed, color col) {
   for (int i=0; i<num; i++) {
     if (balls.size() < 1000) {
-      balls.add(new PlayerBall(gameGraphic.width/2, barY-bar.h, random(-maxSpeed, maxSpeed), -maxSpeed, ballSize, col,ballMaxSpeed));
+      balls.add(new PlayerBall(gameGraphic.width/2, barY-bar.h, random(-maxSpeed, maxSpeed), -(ballMaxSpeed + (maxSpeed-ballMaxSpeed)/2 ), ballSize, col, ballMaxSpeed));
     }
   }
 }
 
 
-void multiBall(int num, PlayerBall thisBall) {
-  for (int i=0; i<num; i++) {
-    if (balls.size() < 1000) {
-      balls.add(new PlayerBall(thisBall.pos.x, thisBall.pos.y, random(-thisBall.maxSpeed, thisBall.maxSpeed), thisBall.dpos.y, ballSize, thisBall.col,thisBall.maxSpeed));
+void multiBall(int num) {
+  for (int i=balls.size()-1; i>=0; i--) {
+    for (int j=0; j<num; j++) {
+      if (balls.size() < 1000) {
+        PlayerBall thisBall = balls.get(i);
+        balls.add(new PlayerBall(thisBall.pos.x, thisBall.pos.y, random(-thisBall.maxSpeed, thisBall.maxSpeed), thisBall.dpos.y, ballSize, thisBall.col, thisBall.maxSpeed));
+      }
     }
   }
 }
