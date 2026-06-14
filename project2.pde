@@ -10,11 +10,6 @@ float ballSize;
 
 float gameScreenSize;
 
-PImage brickImg;
-PImage addBallImg;
-PImage multiBallImg;
-
-JSONArray levels;
 int currentLevel;
 int gameState;
 
@@ -39,7 +34,7 @@ void setup() {
   balls = new ArrayList<PlayerBall>();
 
   ballMaxSpeed = gameGraphic.width/320;
-  ballSize = gameGraphic.width/20;
+  ballSize = gameGraphic.width/25;
   addBall();
 
   currentLevel = 0;
@@ -138,4 +133,10 @@ void draw() {
 
   //clear key state
   keyPulseState.clear();
+
+  //clear sound state
+  hit.activate();
+  hit2.activate();
+  bounce.activate();
+  coin.activate();
 }

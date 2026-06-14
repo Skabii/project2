@@ -5,6 +5,7 @@ void tileTableSetup() {
   tileTable.put("b", new TileBedrock());
   tileTable.put("+", new TileAddBall());
   tileTable.put("*", new TileMultiBall());
+  tileTable.put("s", new TileShield());
 
   //tileTable.put("?", new Tile타일이름()); //?를 아무 글자 한글자로 교체
 }
@@ -24,6 +25,7 @@ class Tile {
 
   @SuppressWarnings("unused")
     void hit(PlayerBall thisBall) {
+    hit.play();
     active = false;
   }
   Tile copy() {
@@ -51,7 +53,7 @@ class Tile타일이름 extends Tile {
 
 class TileBedrock extends Tile {
   TileBedrock() {
-    tileInit(colorRect(color(200), color(200)));
+    tileInit(colorRect(color(200), color(127)));
     clearRequirement = false;
   }
   void hit(PlayerBall thisBall) {
@@ -68,6 +70,7 @@ class TileAddBall extends Tile {
   }
   void hit(PlayerBall thisBall) {
     if (active) {
+      coin.play();
       addBall(3);
       active = false;
     }
@@ -79,16 +82,43 @@ class TileAddBall extends Tile {
 
 class TileMultiBall extends Tile {
   TileMultiBall() {
-    tileInit(addBallImg);
+    tileInit(multiBallImg);
     this.clearRequirement = true;
   }
   void hit(PlayerBall thisBall) {
     if (active) {
+      coin.play();
       multiBall(2, thisBall);
       active = false;
     }
   }
   TileMultiBall copy() {
     return new TileMultiBall();
+  }
+}
+
+class TileShield extends Tile {
+  boolean shield;
+  int hitFrame;
+  TileShield() {
+    tileInit(shieldImg);
+    this.shield = true;
+    this.clearRequirement = true;
+  }
+  void hit(PlayerBall thisBall) {
+    if (active) {
+      if (shield) {
+        hit2.play();
+        shield = false;
+        img = brickImg;
+        hitFrame = frameCount;
+      } else if (hitFrame != frameCount) {
+        hit.play();
+        active = false;
+      }
+    }
+  }
+  TileShield copy() {
+    return new TileShield();
   }
 }

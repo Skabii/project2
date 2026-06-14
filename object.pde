@@ -28,7 +28,7 @@ class PlayerBall extends Sprite {
     this.col = col;
     this.active = true;
   }
-  void update() {
+  void update(Bar thisBar) {
     if (pos.y-size/2 >= gameGraphic.height) {
       active = false;
     }
@@ -39,11 +39,10 @@ class PlayerBall extends Sprite {
       if (pos.y-size/2 <= 0) {
         dpos.y *= -1;
       }
-      super.update();
     }
-  }
-  void update(Bar thisBar) {
+
     if (thisBar.checkBallHit(this)) {
+      bounce.play();
       if (dpos.y > 0) {
         dpos.y *= -1;
       }
@@ -76,7 +75,7 @@ class Bar extends Sprite {
     this.col = col;
   }
   void update() {
-    pos.x = constrain(map(mouseX, width/2-gameScreenSize/2, width/2+gameScreenSize/2, 0, gameGraphic.width), 0, gameGraphic.width);
+    pos.x = lerp(pos.x,map(mouseX, width/2-gameScreenSize/2, width/2+gameScreenSize/2, 0, gameGraphic.width),0.1);
   }
   void render() {
 
@@ -183,7 +182,8 @@ class TileSet {
           }
           for (int i=balls.size()-1; i>=0; i--) {
             PlayerBall thisBall = balls.get(i);
-            if (inRange(thisBall.pos.x, tileX-thisBall.size/2, tileX+tileW+thisBall.size/2) && inRange(thisBall.pos.y, tileY-thisBall.size/2, tileY+tileH+thisBall.size/2) ) {
+            // if (inRange(thisBall.pos.x, tileX-thisBall.size/2, tileX+tileW+thisBall.size/2) && inRange(thisBall.pos.y, tileY-thisBall.size/2, tileY+tileH+thisBall.size/2) ) {
+            if (inRange(thisBall.pos.x, tileX, tileX+tileW) && inRange(thisBall.pos.y, tileY, tileY+tileH) ) {
               thisLine[x].hit(thisBall);
               PVector displacement = thisBall.pos.copy();
               displacement.sub(tileX+tileW/2., tileY+tileH/2.);
@@ -192,16 +192,16 @@ class TileSet {
               if (abs(displacement.x) > abs(displacement.y)) {
                 thisBall.dpos.x *= -1;
                 if (displacement.x < 0) {
-                  thisBall.pos.x = tileX-thisBall.size/2;
+                  thisBall.pos.x = tileX;
                 } else {
-                  thisBall.pos.x = tileX+tileW+thisBall.size/2;
+                  thisBall.pos.x = tileX+tileW;
                 }
               } else {
                 thisBall.dpos.y *= -1;
                 if (displacement.y < 0) {
-                  thisBall.pos.y = tileY-thisBall.size/2;
+                  thisBall.pos.y = tileY;
                 } else {
-                  thisBall.pos.y = tileY+tileH+thisBall.size/2;
+                  thisBall.pos.y = tileY+tileH;
                 }
               }
             }
@@ -237,7 +237,7 @@ void addBall() {
 void addBall(int num) {
   for (int i=0; i<num; i++) {
     if (balls.size() < 1000) {
-      balls.add(new PlayerBall(bar.pos.x, barY-bar.h, random(-ballMaxSpeed/2, ballMaxSpeed/2), -gameGraphic.width/200, ballSize, color(255, 0, 0)));
+      balls.add(new PlayerBall(gameGraphic.width/2, barY-bar.h, random(-ballMaxSpeed, ballMaxSpeed), -gameGraphic.width/200, ballSize, color(255, 0, 0)));
     }
   }
 }
