@@ -131,7 +131,7 @@ class TileSpeedBall extends Tile {
   }
   void hit(PlayerBall thisBall) { //공이 닿았을때 행동, thisBall은 닿은 공 객체
     if (active) { //활성화 (파괴 전) 상태면
-      addSppedBall(2);
+      addBall(2,2*ballMaxSpeed,color(255,255,0));
       active = false; //이 타일을 파괴
     }
   }

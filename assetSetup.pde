@@ -4,11 +4,12 @@ PImage brickImg;
 PImage addBallImg;
 PImage multiBallImg;
 PImage shieldImg;
+PImage sppedBallImg;
 
 JSONArray levels;
 
 PFont myFont;
-PImage sppedBallImg;
+
 class GameSoundEffect {
     SoundFile sound;
     boolean disabled;

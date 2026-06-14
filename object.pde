@@ -19,13 +19,14 @@ class Sprite {
 }
 
 class PlayerBall extends Sprite {
-  float size;
+  float size, maxSpeed;
   color col;
   boolean active;
-  PlayerBall(float x, float y, float dx, float dy, float size, color col) {
+  PlayerBall(float x, float y, float dx, float dy, float size, color col, float maxSpeed) {
     super(x, y, dx, dy);
     this.size = size;
     this.col = col;
+    this.maxSpeed = maxSpeed;
     this.active = true;
   }
   void update(Bar thisBar) {
@@ -48,12 +49,12 @@ class PlayerBall extends Sprite {
       if (dpos.y > 0) {
         dpos.y *= -1;
       }
-      dpos.x = map(pos.x, thisBar.pos.x-thisBar.w/2, thisBar.pos.x+thisBar.w/2, -ballMaxSpeed, ballMaxSpeed);
+      dpos.x = map(pos.x, thisBar.pos.x-thisBar.w/2, thisBar.pos.x+thisBar.w/2, -maxSpeed, maxSpeed);
     }
     if (dpos.x>0) {
-      dpos.x += ballMaxSpeed/1000;
+      dpos.x += maxSpeed/1000;
     } else {
-      dpos.x -= ballMaxSpeed/1000;
+      dpos.x -= maxSpeed/1000;
     }
     update();
     super.update();
@@ -64,44 +65,6 @@ class PlayerBall extends Sprite {
     gameGraphic.fill(col);
     gameGraphic.ellipse(pos.x, pos.y, size, size);
     gameGraphic.popStyle();
-  }
-}
-class SppedPlayerBall extends PlayerBall {
-  float size;
-  color col;
-  boolean active;
-  float ballMaxSpeed_epic;
-  SppedPlayerBall(float x, float y, float dx, float dy, float size, color col) {
-    super(x, y, dx, dy,size,col);
-  }
-  void update(Bar thisBar) {
-    super.update(thisBar);
-    if (pos.y-size/2 >= gameGraphic.height) {
-      active = false;
-    }
-    if (active) {
-      if (pos.x+size/2 >= gameGraphic.width || pos.x-size/2 <= 0) {
-        dpos.x *= -1;
-      }
-      if (pos.y-size/2 <= 0) {
-        dpos.y *= -1;
-      }
-    }
-
-    if (thisBar.checkBallHit(this)) {
-      bounce.play();
-      if (dpos.y > 0) {
-        dpos.y *= -1;
-      }
-      dpos.x = map(pos.x, thisBar.pos.x-thisBar.w/2, thisBar.pos.x+thisBar.w/2, -gameGraphic.width/100, gameGraphic.width/100);
-    }
-    if (dpos.x>0) {
-      dpos.x += ballMaxSpeed/500;
-    } else {
-      dpos.x -= ballMaxSpeed/500;
-    }
-    update();
-    super.update();
   }
 }
 
@@ -288,26 +251,24 @@ boolean inRange(float x, float min, float max) {
 void addBall() {
   addBall(1);
 }
+
 void addBall(int num) {
+  addBall(num,ballMaxSpeed, color(255,0,0));
+}
+
+void addBall(int num, float maxSpeed, color col) {
   for (int i=0; i<num; i++) {
     if (balls.size() < 1000) {
-      balls.add(new PlayerBall(gameGraphic.width/2, barY-bar.h, random(-ballMaxSpeed, ballMaxSpeed), -gameGraphic.width/200, ballSize, color(255, 0, 0)));
+      balls.add(new PlayerBall(gameGraphic.width/2, barY-bar.h, random(-maxSpeed, maxSpeed), -maxSpeed, ballSize, col,ballMaxSpeed));
     }
   }
 }
 
-void addSppedBall(int num) {
-  for (int i=0; i<num; i++) {
-    if (balls.size() < 1000) {
 
-      balls.add(new SppedPlayerBall(gameGraphic.width/2, barY-bar.h, random(-ballMaxSpeed -gameGraphic.width/100, ballMaxSpeed +gameGraphic.width/100), -gameGraphic.width/200, ballSize, color(255, 255, 0)));
-    }
-  }
-}
 void multiBall(int num, PlayerBall thisBall) {
   for (int i=0; i<num; i++) {
     if (balls.size() < 1000) {
-      balls.add(new PlayerBall(thisBall.pos.x, thisBall.pos.y, random(-ballMaxSpeed, ballMaxSpeed), thisBall.dpos.y, ballSize, color(255, 0, 0)));
+      balls.add(new PlayerBall(thisBall.pos.x, thisBall.pos.y, random(-thisBall.maxSpeed, thisBall.maxSpeed), thisBall.dpos.y, ballSize, thisBall.col,thisBall.maxSpeed));
     }
   }
 }
