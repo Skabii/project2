@@ -26,6 +26,7 @@ class Tile {
 
   @SuppressWarnings("unused")
     void hit(PlayerBall thisBall) {
+    score++;
     hit.play();
     active = false;
   }
@@ -42,6 +43,7 @@ class Tile타일이름 extends Tile {
   }
   void hit(PlayerBall thisBall) { //공이 닿았을때 행동, thisBall은 닿은 공 객체
     if (active) { //활성화 (파괴 전) 상태면
+      score++;
       //무언가 일어남
       active = false; //이 타일을 파괴
     }
@@ -71,6 +73,7 @@ class TileAddBall extends Tile {
   }
   void hit(PlayerBall thisBall) {
     if (active) {
+      score++;
       coin.play();
       addBall(3);
       active = false;
@@ -88,6 +91,7 @@ class TileMultiBall extends Tile {
   }
   void hit(PlayerBall thisBall) {
     if (active) {
+      score++;
       coin.play();
       multiBall(2);
       active = false;
@@ -114,6 +118,7 @@ class TileShield extends Tile {
         img = brickImg;
         hitFrame = frameCount;
       } else if (hitFrame != frameCount) {
+        score++;
         hit.play();
         active = false;
       }
@@ -132,6 +137,7 @@ class TileSpeedBall extends Tile {
   }
   void hit(PlayerBall thisBall) { //공이 닿았을때 행동, thisBall은 닿은 공 객체
     if (active) { //활성화 (파괴 전) 상태면
+      score++;
       coin.play();
       addBall(2,2*ballMaxSpeed,color(255,255,0));
       active = false; //이 타일을 파괴
@@ -151,6 +157,7 @@ class TileBoom extends Tile {
   void hit(PlayerBall thisBall) { //공이 닿았을때 행동, thisBall은 닿은 공 객체
     boom.play();
     if (active) { //활성화 (파괴 전) 상태면
+      score++;
       for (int y=0; y<board.tileArray.length; y++) {
         if (!active){return;}
         Tile[] thisLine = board.tileArray[y];

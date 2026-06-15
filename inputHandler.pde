@@ -10,6 +10,15 @@ void keyPressed() {
     keyPulseState.put(keyCode,true);
 
     println(keyCode);
+    if (gameState == 3 || gameState == 4) {
+        if (keyCode == 8) {
+            if (!playerName.isEmpty()) {
+                playerName = playerName.substring(0,playerName.length()-1);
+            }
+        } else if (key != CODED && key != '\n' && key != ' ') {
+            playerName += key;
+        }
+    }
 }
 
 void keyReleased() {
