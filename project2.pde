@@ -37,7 +37,7 @@ void setup() {
   ballSize = gameGraphic.width/25;
   addBall();
 
-  currentLevel = 0;
+  currentLevel = 7;
   loadLevel(currentLevel);
 
   gameState = 0;
@@ -152,4 +152,5 @@ void draw() {
   hit2.activate();
   bounce.activate();
   coin.activate();
+  boom.activate();
 }

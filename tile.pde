@@ -149,6 +149,7 @@ class TileBoom extends Tile {
   }
 
   void hit(PlayerBall thisBall) { //공이 닿았을때 행동, thisBall은 닿은 공 객체
+    boom.play();
     if (active) { //활성화 (파괴 전) 상태면
       for (int y=0; y<board.tileArray.length; y++) {
         if (!active){return;}
