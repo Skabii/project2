@@ -37,7 +37,7 @@ void setup() {
   ballSize = gameGraphic.width/25;
   addBall();
 
-  currentLevel = 7;
+  currentLevel = 0;
   loadLevel(currentLevel);
 
   gameState = 0;
