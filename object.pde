@@ -30,20 +30,22 @@ class PlayerBall extends Sprite {
     this.active = true;
   }
   void update(Bar thisBar) {
-    if (pos.y-size/2 >= gameGraphic.height) {
+    if (pos.y-size/2 >= gameGraphic.height) { //remove ball if it fell under the screen
       active = false;
     }
     if (active) {
-      if (pos.x+size/2 >= gameGraphic.width || pos.x-size/2 <= 0) {
+      //collision with screen border
+      if (pos.x+size/2 >= gameGraphic.width || pos.x-size/2 <= 0) { //hit side
         dpos.x *= -1;
         pos.x = constrain(pos.x, size/2, gameGraphic.width-size/2);
       }
-      if (pos.y-size/2 <= 0) {
+      if (pos.y-size/2 <= 0) { //hit ceiling
         dpos.y *= -1;
         pos.y = max(size/2, pos.y);
       }
     }
 
+    //collision with bar
     if (thisBar.checkBallHit(this)) {
       bounce.play();
       if (dpos.y > 0) {
@@ -51,6 +53,8 @@ class PlayerBall extends Sprite {
       }
       dpos.x = map(pos.x, thisBar.pos.x-thisBar.w/2, thisBar.pos.x+thisBar.w/2, -maxSpeed, maxSpeed);
     }
+
+    //accelerate to prevent getting stuck
     if (dpos.x>0) {
       dpos.x += maxSpeed/1000;
     } else {
@@ -60,7 +64,6 @@ class PlayerBall extends Sprite {
     super.update();
   }
   void render() {
-
     gameGraphic.pushStyle();
     gameGraphic.fill(col);
     gameGraphic.ellipse(pos.x, pos.y, size, size);
@@ -78,10 +81,10 @@ class Bar extends Sprite {
     this.col = col;
   }
   void update() {
+    //follow mouse
     pos.x = lerp(pos.x, map(mouseX, width/2-gameScreenSize/2, width/2+gameScreenSize/2, 0, gameGraphic.width), 0.1);
   }
   void render() {
-
     gameGraphic.pushStyle();
     gameGraphic.fill(col);
     gameGraphic.rectMode(CENTER);
@@ -90,6 +93,7 @@ class Bar extends Sprite {
   }
 
   boolean checkBallHit(PlayerBall thisBall) {
+    //return true if thisBall is colliding with this bar
     if (inRange(thisBall.pos.x, pos.x-w/2-thisBall.size/2, pos.x+w/2+thisBall.size/2) && inRange(thisBall.pos.y, pos.y-h/2-thisBall.size/2, pos.y+h/2+thisBall.size/2)) {
       return true;
     } else {
@@ -98,23 +102,23 @@ class Bar extends Sprite {
   }
 }
 
-HashMap<String, Tile> tileTable;
+HashMap<String, Tile> tileTable; //table to store tile id : tile object
 
 Tile[][] parseTile(String tileText) {
   return parseTile(tileText, tileTable);
 }
 
 Tile[][] parseTile(String tileText, HashMap<String, Tile> tileTable) {
-  String[] tileTextArray = tileText.split("\n");
-  int w = tileTextArray[0].length();
-  int h = tileTextArray.length;
+  String[] tileTextArray = tileText.split("\n"); //split by lines
+  int w = tileTextArray[0].length(); //width of board = length of first line
+  int h = tileTextArray.length; //height of board = number of lines
   Tile[][] tileArray = new Tile[h][w];
 
   for (int y=0; y<tileTextArray.length; y++) {
     String thisLine = tileTextArray[y];
     for (int x=0; x<thisLine.length(); x++) {
-      Tile tileToAdd = tileTable.get(str(thisLine.charAt(x)));
-      if (tileToAdd != null) {
+      Tile tileToAdd = tileTable.get(str(thisLine.charAt(x))); //get tile object from the table
+      if (tileToAdd != null) { //null = empty
         tileArray[y][x] = tileToAdd.copy();
       }
     }
@@ -154,7 +158,6 @@ class TileSet {
       for (int x=0; x<thisLine.length; x++) {
         if (thisLine[x] != null) {
           gameGraphic.image(thisLine[x].img, tileW*x, tileH*y, tileW, tileH);
-          //gameGraphic.rect(tileW*x,tileH*y,tileW,tileH);
         }
       }
     }
@@ -168,7 +171,7 @@ class TileSet {
     tileW = (float) w/tileArray[0].length;
     tileH = (float) h/tileArray.length;
   }
-  Tile getTileOrNull(int x, int y) {
+  Tile getTileOrNull(int x, int y) { //get tile object with coordinates, x+ = right / y+ = down, return null if empty or out of index
     try {
       return tileArray[y][x];
     }
@@ -182,21 +185,32 @@ class TileSet {
     for (int y=0; y<tileArray.length; y++) {
       Tile[] thisLine = tileArray[y];
       for (int x=0; x<thisLine.length; x++) {
-        if (thisLine[x] != null) {
+        if (thisLine[x] != null) { //if this tile isn't empty
+
+          //get coordinates of this tile
           float tileX = tileW*x;
           float tileY = tileH*y;
-          if (thisLine[x].clearRequirement) {
+
+          if (thisLine[x].clearRequirement) { //set cleared state to false if this tile is required to clear the board
             cleared = false;
           }
-          for (int i=balls.size()-1; i>=0; i--) {
+
+          for (int i=balls.size()-1; i>=0; i--) { //for every ball
             PlayerBall thisBall = balls.get(i);
-            // if (inRange(thisBall.pos.x, tileX-thisBall.size/2, tileX+tileW+thisBall.size/2) && inRange(thisBall.pos.y, tileY-thisBall.size/2, tileY+tileH+thisBall.size/2) ) {
+
             if (inRange(thisBall.pos.x, tileX-thisBall.size/2, tileX+tileW+thisBall.size/2) && inRange(thisBall.pos.y, tileY-thisBall.size/2, tileY+tileH+thisBall.size/2) ) {
-              thisLine[x].hit(thisBall);
-              PVector displacement = thisBall.pos.copy();
+              //if this ball is colliding with this tile
+              thisLine[x].hit(thisBall,x,y); //hit this tile
+
+              PVector displacement = thisBall.pos.copy(); //the direction the ball should move after colliding with this tile
               displacement.sub(tileX+tileW/2., tileY+tileH/2.);
+
+              //normalize the vector based on tile width and height
               displacement.x = displacement.x / tileW;
               displacement.y = displacement.y / tileH;
+
+              //if there's another tile blocking a side of this tile prevent the ball from colliding on that side
+              //this is for preventing the ball getting stuck / phasing trhough the tile when it hits 2 tiles at the same time
               if (getTileOrNull(x-1, y) != null) {
                 displacement.x = max(displacement.x, 0);
               } else if (getTileOrNull(x+1, y) != null) {
@@ -206,6 +220,8 @@ class TileSet {
               } else if (getTileOrNull(x, y+1) != null) {
                 displacement.y = min(displacement.y, 0);
               }
+
+              //apply position and movement to the ball
               if (abs(displacement.x) > abs(displacement.y)) {
                 thisBall.dpos.x *= -1;
                 if (displacement.x < 0) {
@@ -232,6 +248,7 @@ class TileSet {
   }
 }
 
+//for temporary images
 PImage colorRect(color strokeCol, color fillCol) {
   PGraphics result = createGraphics(256, 256);
   result.beginDraw();
