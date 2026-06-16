@@ -6,6 +6,12 @@ PImage multiBallImg;
 PImage shieldImg;
 PImage sppedBallImg;
 PImage BoomImg;
+PImage brickBlueImg;
+PImage brickGrayImg;
+PImage brickGreenImg;
+PImage brickPurpleImg;
+PImage brickRedImg;
+PImage brickYellowImg;
 JSONArray levels;
 
 PFont myFont;
@@ -41,6 +47,12 @@ void assetSetup() {
   shieldImg = loadImage("shield.png");
   sppedBallImg= loadImage("Yellow.png");
   BoomImg= loadImage("Boom.png");
+  brickBlueImg = loadImage("brick-blue.png");
+  brickGrayImg = loadImage("brick-gray.png");
+  brickGreenImg = loadImage("brick-green.png");
+  brickPurpleImg = loadImage("brick-purple.png");
+  brickRedImg = loadImage("brick-red.png");
+  brickYellowImg = loadImage("brick-yellow.png");
   tileTableSetup();
 
   levels = loadJSONArray("levels.json");
