@@ -6,6 +6,11 @@ PImage multiBallImg;
 PImage shieldImg;
 PImage sppedBallImg;
 PImage BoomImg;
+PImage colorRed;
+PImage colorGreen;
+PImage colorBlack;
+
+
 JSONArray levels;
 
 PFont myFont;
@@ -34,21 +39,27 @@ GameSoundEffect coin;
 
 
 void assetSetup() {
-  brickImg = loadImage("brick.png");
-  addBallImg = loadImage("addBall.png");
-  multiBallImg = loadImage("multiBall.png");
-  shieldImg = loadImage("shield.png");
-  sppedBallImg= loadImage("Yellow.png");
-  BoomImg= loadImage("Boom.png");
-  tileTableSetup();
+    brickImg = loadImage("brick.png");
+    addBallImg = loadImage("addBall.png");
+    multiBallImg = loadImage("multiBall.png");
+    shieldImg = loadImage("shield.png");
+    sppedBallImg= loadImage("Yellow.png");
+    BoomImg= loadImage("Boom.png");
 
-  levels = loadJSONArray("levels.json");
 
-  myFont = createFont("bitcountsingle.ttf",displayWidth/8);
-  textFont(myFont);
+    colorRed= loadImage("Red.png");
+    colorGreen= loadImage("Green.png");
+    colorBlack= loadImage("Black.png");
 
-  hit = new GameSoundEffect(new SoundFile(this,"hit.wav"));
-  hit2 = new GameSoundEffect(new SoundFile(this,"hit2.wav"));
-  bounce = new GameSoundEffect(new SoundFile(this,"bounce.wav"));
-  coin = new GameSoundEffect(new SoundFile(this,"coin.wav"));
+    tileTableSetup();
+
+    levels = loadJSONArray("levels.json");
+
+    myFont = createFont("bitcountsingle.ttf",displayWidth/8);
+    textFont(myFont);
+
+    hit = new GameSoundEffect(new SoundFile(this,"hit.wav"));
+    hit2 = new GameSoundEffect(new SoundFile(this,"hit2.wav"));
+    bounce = new GameSoundEffect(new SoundFile(this,"bounce.wav"));
+    coin = new GameSoundEffect(new SoundFile(this,"coin.wav"));
 }
