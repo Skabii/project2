@@ -128,6 +128,7 @@ void draw() {
     if (keyPulseState.getOrDefault(-1, false)) {
       gameState = 0;
       currentLevel++;
+      score += timeLeft/30;
       if (currentLevel >= levels.size()) {
         gameState = 4;
       } else {
@@ -191,8 +192,8 @@ void draw() {
   } else if (gameState == 1) { //in game
     pushStyle();
     textSize(gameScreenSize/10);
-    textAlign(CENTER, TOP);
-    text(str(timeLeft/60) + " | score : "+score, width/2, 0);
+    textAlign(CENTER,TOP);
+    text("time : " + str(timeLeft/60) + " | score : "+score, width/2, 0);
     popStyle();
   } else if (gameState == 2) { //level clear
     pushStyle();
@@ -200,11 +201,16 @@ void draw() {
     fill(0, 127);
     rect(0, height*1/3, width, height*1/3);
     popStyle();
-    text("LEVEL CLEAR\nCLICK TO CONTINUE", width/2, height/2);
+    pushStyle();
+    textAlign(CENTER,CENTER);
+    fill(64,255,64);
+    text("LEVEL CLEAR\nCLEAR BONUS : " + timeLeft/30 + "\nCLICK TO CONTINUE", width/2, height/2);
+    popStyle();
   } else if (gameState == 3) { //game over
     pushStyle();
     fill(200, 0, 0);
     textSize(gameScreenSize/20);
+    textAlign(CENTER,CENTER);
     text("GAME OVER\nTYPE NAME AND PRESS ENTER >" + playerName, width/2, height/2);
     popStyle();
   } else if (gameState == 4) { //game clear
