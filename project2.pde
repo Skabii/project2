@@ -85,6 +85,7 @@ void setup() {
 void draw() {
   background(127);
   updateScreenSize();
+  moveWindow();
 
   //init game graphic
   gameGraphic.beginDraw();
