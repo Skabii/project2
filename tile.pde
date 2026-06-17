@@ -41,7 +41,13 @@ class Tile {
 
   void particle(int x, int y) {
     for (int i=0; i<4; i++) {
-      particles.add(new Particle((x+0.5)*board.tileW, (y+0.5)*board.tileH, random(-gameScreenSize/100, gameScreenSize/100), random(-gameScreenSize/100, gameScreenSize/100), particleCol));
+      particles.add(new Particle((x+0.5)*board.tileW, (y+0.5)*board.tileH, random(-gameScreenSize/100, gameScreenSize/100), random(-gameScreenSize/100, gameScreenSize/100), particleCol,1));
+    }
+  }
+
+  void Boomparticle(int x, int y) {
+    for (int i=0; i<15; i++) {
+      particles.add(new Particle((x+0.5)*board.tileW, (y+0.5)*board.tileH, random(-gameScreenSize/50, gameScreenSize/50), random(-gameScreenSize/50, gameScreenSize/50), color(255,0,0),2));
     }
   }
   Tile copy() {
@@ -179,7 +185,7 @@ class TileBoom extends Tile {
     if (active) { //활성화 (파괴 전) 상태면
       score++;
       boom.play();
-      particle(x, y); //파티클 추가
+      Boomparticle(x, y); //파티클 추가
       active = false;
       for (int boomX=-1; boomX<=1; boomX++) {
         for (int boomY=-1; boomY<=1; boomY++) {
