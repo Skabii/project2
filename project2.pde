@@ -47,7 +47,7 @@ class ScoreEntry {
     this.score = score;
   }
   String toString() {
-    return name + " - " + score + " bricks";
+    return name + " - " + score + " score";
   }
 }
 
