@@ -35,6 +35,7 @@ GameSoundEffect hit2;
 GameSoundEffect bounce;
 GameSoundEffect coin;
 GameSoundEffect boom;
+GameSoundEffect fall;
 
 
 void assetSetup() {
@@ -58,4 +59,5 @@ void assetSetup() {
     bounce = new GameSoundEffect(new SoundFile(this,"bounce.wav"));
     coin = new GameSoundEffect(new SoundFile(this,"coin.wav"));
     boom = new GameSoundEffect(new SoundFile(this,"boom.wav"));
+    fall = new GameSoundEffect(new SoundFile(this,"fall.wav"));
 }

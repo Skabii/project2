@@ -59,6 +59,7 @@ class PlayerBall extends Sprite {
   }
   void update(Bar thisBar) {
     if (pos.y-size/2 >= gameGraphic.height) { //remove ball if it fell under the screen
+      fall.play();
       active = false;
     }
     if (active) {
