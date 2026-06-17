@@ -47,11 +47,6 @@ void assetSetup() {
     sppedBallImg= loadImage("Yellow.png");
     BoomImg= loadImage("Boom.png");
 
-
-    colorRed= loadImage("Red.png");
-    colorGreen= loadImage("Green.png");
-    colorBlack= loadImage("Black.png");
-
     tileTableSetup();
 
     levels = loadJSONArray("levels.json");
@@ -63,4 +58,5 @@ void assetSetup() {
     hit2 = new GameSoundEffect(new SoundFile(this,"hit2.wav"));
     bounce = new GameSoundEffect(new SoundFile(this,"bounce.wav"));
     coin = new GameSoundEffect(new SoundFile(this,"coin.wav"));
+    boom = new GameSoundEffect(new SoundFile(this,"boom.wav"));
 }
