@@ -186,7 +186,8 @@ class TileSet {
       Tile[] thisLine = tileArray[y];
       for (int x=0; x<thisLine.length; x++) {
         if (thisLine[x] != null) {
-          gameGraphic.image(thisLine[x].img, tileW*x, tileH*y, tileW, tileH);
+          float yOffset = -tileH/100*(max(0,20-(frameCount - thisLine[x].hitTime)));
+          gameGraphic.image(thisLine[x].img, tileW*x, tileH*y+yOffset, tileW, tileH);
         }
       }
     }
