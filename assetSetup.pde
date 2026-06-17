@@ -6,9 +6,7 @@ PImage multiBallImg;
 PImage shieldImg;
 PImage sppedBallImg;
 PImage BoomImg;
-PImage colorRed;
-PImage colorGreen;
-PImage colorBlack;
+PImage brickGrayImg;
 
 
 JSONArray levels;
@@ -46,6 +44,7 @@ void assetSetup() {
     shieldImg = loadImage("shield.png");
     sppedBallImg= loadImage("Yellow.png");
     BoomImg= loadImage("Boom.png");
+    brickGrayImg = loadImage("brick-gray.png");
 
     tileTableSetup();
 

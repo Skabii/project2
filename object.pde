@@ -18,6 +18,22 @@ class Sprite {
   }
 }
 
+class Particle extends Sprite {
+  color col;
+  float size;
+  Particle(float x, float y, float dx, float dy, color col, float size) {
+    super(x,y,dx,dy);
+    this.col = col;
+    this.size = size;
+  }
+  void redner() {
+    pushStyle();
+    fill(col);
+    ellipse(pos.x,pos.y,size,size);
+    popStyle();
+  }
+}
+
 class PlayerBall extends Sprite {
   float size, maxSpeed;
   color col;

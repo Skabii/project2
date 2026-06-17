@@ -3,6 +3,7 @@ PGraphics gameGraphic;
 import java.util.Comparator;
 
 ArrayList<PlayerBall> balls;
+ArrayList<Particle> particles;
 Bar bar;
 TileSet board;
 float barY;

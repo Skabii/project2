@@ -8,6 +8,7 @@ void tileTableSetup() {
   tileTable.put("s", new TileShield());
   tileTable.put(">", new TileSpeedBall());
   tileTable.put("i", new TileBoom());
+  tileTable.put("j", new TileBoomOnly());
   //tileTable.put("?", new Tile타일이름()); //?를 아무 글자 한글자로 교체
 }
 
@@ -29,6 +30,10 @@ class Tile {
     score++;
     hit.play();
     active = false;
+  }
+
+    void boom(PlayerBall thisBall, int x, int y) {
+    hit(thisBall,x,y);
   }
   Tile copy() {
     return new Tile();
@@ -162,9 +167,9 @@ class TileBoom extends Tile {
       active = false;
       for (int boomX=-1; boomX<=1; boomX++) {
         for (int boomY=-1; boomY<=1; boomY++) {
-          Tile boomTile = board.getTileOrNull(x+boomX,y+boomY);
+          Tile boomTile = board.getTileOrNull(x+boomX, y+boomY);
           if (boomTile != null) {
-            boomTile.hit(thisBall,x+boomX,y+boomY);
+            boomTile.boom(thisBall, x+boomX, y+boomY);
           }
         }
       }
@@ -173,5 +178,25 @@ class TileBoom extends Tile {
 
   TileBoom copy() { //맨 처음에 맵 생성할때 쓰이는 함수, 타일이름이 클래스에서의 이름이랑 같아야 함
     return new TileBoom();
+  }
+}
+
+class TileBoomOnly extends Tile {
+  TileBoomOnly() {
+    tileInit(brickGrayImg); //brickImg를 다른 PImage로 바꾸면 외형이 그 이미지로 나타남
+    this.clearRequirement = false; //true면 이 타일을 깨야 클리어 판정, false면 이 타일은 안깨도 클리어 판정
+  }
+  void hit(PlayerBall thisBall, int x, int y) { //공이 닿았을때 행동, thisBall은 닿은 공 객체, x/y는 이 타일의 좌표
+    
+  }
+  void boom(PlayerBall thisBall, int x, int y) { //공이 닿았을때 행동, thisBall은 닿은 공 객체, x/y는 이 타일의 좌표
+    if (active) { //활성화 (파괴 전) 상태면
+      score++;
+      //무언가 일어남
+      active = false; //이 타일을 파괴
+    }
+  }
+  TileBoomOnly copy() { //맨 처음에 맵 생성할때 쓰이는 함수, 타일이름이 클래스에서의 이름이랑 같아야 함
+    return new TileBoomOnly();
   }
 }
