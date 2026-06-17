@@ -16,9 +16,11 @@ class Tile {
   PImage img;
   boolean active;
   boolean clearRequirement;
+  color particleCol;
   Tile() {
     tileInit(brickImg);
     this.clearRequirement = true;
+    particleCol = color(#707070);
   }
   void tileInit(PImage img) {
     this.img = img;
@@ -29,11 +31,16 @@ class Tile {
     void hit(PlayerBall thisBall, int x, int y) {
     score++;
     hit.play();
+    particle(x,y);
     active = false;
   }
 
     void boom(PlayerBall thisBall, int x, int y) {
     hit(thisBall,x,y);
+  }
+
+  void particle(int x, int y) {
+    particles.add(new Particle((x+0.5)*board.tileW,(y+0.5)*board.tileH, random(-10,10), random(-10,10), particleCol));
   }
   Tile copy() {
     return new Tile();
