@@ -21,16 +21,28 @@ class Sprite {
 class Particle extends Sprite {
   color col;
   float size;
-  Particle(float x, float y, float dx, float dy, color col, float size) {
+  boolean active;
+  Particle(float x, float y, float dx, float dy, color col) {
     super(x,y,dx,dy);
     this.col = col;
-    this.size = size;
+    this.size = 100;
+    this.active = true;
   }
-  void redner() {
-    pushStyle();
-    fill(col);
-    ellipse(pos.x,pos.y,size,size);
-    popStyle();
+  void update() {
+    super.update();
+    size -= gameGraphic.width/30/30;
+    if (size <= 0) {
+      active = false;
+    }
+  }
+  void render() {
+    println(pos.x);
+    println(pos.y);
+    gameGraphic.pushStyle();
+    gameGraphic.stroke(0);
+    gameGraphic.fill(col);
+    gameGraphic.ellipse(pos.x,pos.y,size,size);
+    gameGraphic.popStyle();
   }
 }
 

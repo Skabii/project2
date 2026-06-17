@@ -70,6 +70,7 @@ void setup() {
   bar = new Bar(gameGraphic.width/4, gameGraphic.height/16, color(100));
 
   balls = new ArrayList<PlayerBall>();
+  particles = new ArrayList<Particle>();
 
   ballMaxSpeed = gameGraphic.width/200;
   ballSize = gameGraphic.width/25;
@@ -89,6 +90,9 @@ void draw() {
   gameGraphic.beginDraw();
 
   //game logic
+  for (int i=particles.size()-1; i>=0; i--) {
+    particles.get(i).update();
+  }
   if (gameState == -1) { //leaderboard
     if (keyPulseState.getOrDefault(-1, false)) {
       gameState = 0;
@@ -136,6 +140,9 @@ void draw() {
   }
 
   //render
+  for (int i=particles.size()-1; i>=0; i--) {
+    particles.get(i).render();
+  }
   if (gameState == 0 || gameState == 1) {
     gameGraphic.background(200);
     board.render();
