@@ -22,10 +22,10 @@ class Particle extends Sprite {
   color col;
   float size;
   boolean active;
-  Particle(float x, float y, float dx, float dy, color col) {
+  Particle(float x, float y, float dx, float dy, color col,float size) {
     super(x,y,dx,dy);
     this.col = col;
-    this.size = gameScreenSize/60;
+    this.size = gameScreenSize/60 *size;
     this.active = true;
   }
   void update() {
