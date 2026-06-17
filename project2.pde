@@ -138,7 +138,7 @@ void draw() {
     }
   } else if (gameState == 3 || gameState == 4) { //game over / game clear
     if (keyPulseState.getOrDefault(10, false)) {
-      if (score > scoreData.getInt(playerName)) {
+      if (!scoreData.hasKey(playerName) || score > scoreData.getInt(playerName)) {
         scoreData.setInt(playerName, score);
         saveJSONObject(scoreData, "scoreData.json");
       }
