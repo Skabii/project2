@@ -186,6 +186,7 @@ class TileBoom extends Tile {
       score++;
       boom.play();
       Boomparticle(x, y); //파티클 추가
+      BoomEffect();
       active = false;
       for (int boomX=-1; boomX<=1; boomX++) {
         for (int boomY=-1; boomY<=1; boomY++) {
@@ -222,3 +223,29 @@ class TileBoomOnly extends Tile {
     return new TileBoomOnly();
   }
 }
+
+
+int boomtime=0;
+boolean ifboom = false;
+float moveX=1;
+float moveY=-1;
+
+void moveWindow(){
+  if(!ifboom){return;}
+
+  boomtime+=1;
+  if(boomtime>=13){boomtime = 0; ifboom=false; return;}
+
+  moveX=moveX*-1.1;
+  moveY=moveY*-1.1;
+  translate(moveX,moveY);
+}
+
+void BoomEffect(){
+  moveX=1;
+  moveY=-1;
+  boomtime = 0;
+  ifboom=true;
+}
+
+
