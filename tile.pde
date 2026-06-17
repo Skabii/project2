@@ -8,6 +8,9 @@ void tileTableSetup() {
   tileTable.put("s", new TileShield());
   tileTable.put(">", new TileSpeedBall());
   tileTable.put("i", new TileBoom());
+  tileTable.put("1", new TileRed());
+  tileTable.put("2", new TileGreen());
+  tileTable.put("3", new TileBlack());
   //tileTable.put("?", new Tile타일이름()); //?를 아무 글자 한글자로 교체
 }
 
@@ -152,7 +155,7 @@ class TileSpeedBall extends Tile {
 class TileBoom extends Tile {
   TileBoom() {
     tileInit(BoomImg); //brickImg를 다른 PImage로 바꾸면 외형이 그 이미지로 나타남
-    this.clearRequirement = false; //true면 이 타일을 깨야 클리어 판정, false면 이 타일은 안깨도 클리어 판정
+    this.clearRequirement = true; //true면 이 타일을 깨야 클리어 판정, false면 이 타일은 안깨도 클리어 판정
   }
 
   void hit(PlayerBall thisBall, int x, int y) { //공이 닿았을때 행동, thisBall은 닿은 공 객체
@@ -176,6 +179,56 @@ class TileBoom extends Tile {
   }
 }
 
+<<<<<<< HEAD
+//한국어로 된 부분들 바꾸면 됨
+class TileRed extends Tile {
+  TileRed() {
+    tileInit(colorRed); //brickImg를 다른 PImage로 바꾸면 외형이 그 이미지로 나타남
+    this.clearRequirement = true; //true면 이 타일을 깨야 클리어 판정, false면 이 타일은 안깨도 클리어 판정
+  }
+  void hit(PlayerBall thisBall) { //공이 닿았을때 행동, thisBall은 닿은 공 객체
+    if (active) { //활성화 (파괴 전) 상태면
+      //무언가 일어남
+      active = false; //이 타일을 파괴
+    }
+  }
+  TileRed copy() { //맨 처음에 맵 생성할때 쓰이는 함수, 타일이름이 클래스에서의 이름이랑 같아야 함
+    return new TileRed();
+  }
+}
+//한국어로 된 부분들 바꾸면 됨
+class TileGreen extends Tile {
+  TileGreen() {
+    tileInit(colorGreen); //brickImg를 다른 PImage로 바꾸면 외형이 그 이미지로 나타남
+    this.clearRequirement = true; //true면 이 타일을 깨야 클리어 판정, false면 이 타일은 안깨도 클리어 판정
+  }
+  void hit(PlayerBall thisBall) { //공이 닿았을때 행동, thisBall은 닿은 공 객체
+    if (active) { //활성화 (파괴 전) 상태면
+      //무언가 일어남
+      active = false; //이 타일을 파괴
+    }
+  }
+  TileGreen copy() { //맨 처음에 맵 생성할때 쓰이는 함수, 타일이름이 클래스에서의 이름이랑 같아야 함
+    return new TileGreen();
+  }
+}
+//한국어로 된 부분들 바꾸면 됨
+class TileBlack extends Tile {
+  TileBlack() {
+    tileInit(colorBlack); //brickImg를 다른 PImage로 바꾸면 외형이 그 이미지로 나타남
+    this.clearRequirement = true; //true면 이 타일을 깨야 클리어 판정, false면 이 타일은 안깨도 클리어 판정
+  }
+  void hit(PlayerBall thisBall) { //공이 닿았을때 행동, thisBall은 닿은 공 객체
+    if (active) { //활성화 (파괴 전) 상태면
+      //무언가 일어남
+      active = false; //이 타일을 파괴
+    }
+  }
+  TileBlack copy() { //맨 처음에 맵 생성할때 쓰이는 함수, 타일이름이 클래스에서의 이름이랑 같아야 함
+    return new TileBlack();
+  }
+}
+=======
 // class TileBoom extends Tile {
 //   TileBoom() {
 //     tileInit(BoomImg); //brickImg를 다른 PImage로 바꾸면 외형이 그 이미지로 나타남
@@ -253,3 +306,4 @@ class TileBoom extends Tile {
 //     return new TileBoom();
 //   }
 // }
+>>>>>>> a2b6379857943e47516b19f844c708d9b90b989f

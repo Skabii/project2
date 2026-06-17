@@ -6,12 +6,20 @@ PImage multiBallImg;
 PImage shieldImg;
 PImage sppedBallImg;
 PImage BoomImg;
+<<<<<<< HEAD
+PImage colorRed;
+PImage colorGreen;
+PImage colorBlack;
+
+
+=======
 PImage brickBlueImg;
 PImage brickGrayImg;
 PImage brickGreenImg;
 PImage brickPurpleImg;
 PImage brickRedImg;
 PImage brickYellowImg;
+>>>>>>> a2b6379857943e47516b19f844c708d9b90b989f
 JSONArray levels;
 
 PFont myFont;
@@ -41,6 +49,14 @@ GameSoundEffect boom;
 
 
 void assetSetup() {
+<<<<<<< HEAD
+    brickImg = loadImage("brick.png");
+    addBallImg = loadImage("addBall.png");
+    multiBallImg = loadImage("multiBall.png");
+    shieldImg = loadImage("shield.png");
+    sppedBallImg= loadImage("Yellow.png");
+    BoomImg= loadImage("Boom.png");
+=======
   brickImg = loadImage("brick.png");
   addBallImg = loadImage("addBall.png");
   multiBallImg = loadImage("multiBall.png");
@@ -54,15 +70,30 @@ void assetSetup() {
   brickRedImg = loadImage("brick-red.png");
   brickYellowImg = loadImage("brick-yellow.png");
   tileTableSetup();
+>>>>>>> a2b6379857943e47516b19f844c708d9b90b989f
 
-  levels = loadJSONArray("levels.json");
 
-  myFont = createFont("bitcountsingle.ttf",displayWidth/8);
-  textFont(myFont);
+    colorRed= loadImage("Red.png");
+    colorGreen= loadImage("Green.png");
+    colorBlack= loadImage("Black.png");
 
+<<<<<<< HEAD
+    tileTableSetup();
+
+    levels = loadJSONArray("levels.json");
+
+    myFont = createFont("bitcountsingle.ttf",displayWidth/8);
+    textFont(myFont);
+
+    hit = new GameSoundEffect(new SoundFile(this,"hit.wav"));
+    hit2 = new GameSoundEffect(new SoundFile(this,"hit2.wav"));
+    bounce = new GameSoundEffect(new SoundFile(this,"bounce.wav"));
+    coin = new GameSoundEffect(new SoundFile(this,"coin.wav"));
+=======
   hit = new GameSoundEffect(new SoundFile(this,"hit.wav"));
   hit2 = new GameSoundEffect(new SoundFile(this,"hit2.wav"));
   bounce = new GameSoundEffect(new SoundFile(this,"bounce.wav"));
   coin = new GameSoundEffect(new SoundFile(this,"coin.wav"));
   boom = new GameSoundEffect(new SoundFile(this,"boom.wav"));
+>>>>>>> a2b6379857943e47516b19f844c708d9b90b989f
 }
