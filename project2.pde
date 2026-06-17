@@ -90,9 +90,6 @@ void draw() {
   gameGraphic.beginDraw();
 
   //game logic
-  for (int i=particles.size()-1; i>=0; i--) {
-    particles.get(i).update();
-  }
   if (gameState == -1) { //leaderboard
     if (keyPulseState.getOrDefault(-1, false)) {
       gameState = 0;
@@ -115,6 +112,12 @@ void draw() {
         balls.remove(i);
       }
     }
+    for (int i=particles.size()-1; i>=0; i--) {
+      particles.get(i).update();
+      if (!particles.get(i).active) {
+        particles.remove(i);
+      }
+    }
 
     if (timeLeft-- < 0 || balls.isEmpty()) {
       gameState = 3;
@@ -133,16 +136,13 @@ void draw() {
     }
   } else if (gameState == 3 || gameState == 4) { //game over / game clear
     if (keyPulseState.getOrDefault(10, false)) {
-      scoreData.setInt(playerName,score);
-      saveJSONObject(scoreData,"scoreData.json");
+      scoreData.setInt(playerName, score);
+      saveJSONObject(scoreData, "scoreData.json");
       gameState = -1;
     }
   }
 
   //render
-  for (int i=particles.size()-1; i>=0; i--) {
-    particles.get(i).render();
-  }
   if (gameState == 0 || gameState == 1) {
     gameGraphic.background(200);
     board.render();
@@ -150,6 +150,9 @@ void draw() {
       balls.get(i).render();
     }
     bar.render();
+  }
+  for (int i=particles.size()-1; i>=0; i--) {
+    particles.get(i).render();
   }
 
   //end render

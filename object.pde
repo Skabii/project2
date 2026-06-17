@@ -25,12 +25,12 @@ class Particle extends Sprite {
   Particle(float x, float y, float dx, float dy, color col) {
     super(x,y,dx,dy);
     this.col = col;
-    this.size = 100;
+    this.size = gameScreenSize/60;
     this.active = true;
   }
   void update() {
     super.update();
-    size -= gameGraphic.width/30/30;
+    size -= gameScreenSize/60/60;
     if (size <= 0) {
       active = false;
     }
@@ -332,5 +332,6 @@ void updateScreenSize() {
 void loadLevel(int level) {
   board = new TileSet(levels.getString(level));
   balls.clear();
+  particles.clear();
   addBall();
 }

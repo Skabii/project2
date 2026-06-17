@@ -31,16 +31,18 @@ class Tile {
     void hit(PlayerBall thisBall, int x, int y) {
     score++;
     hit.play();
-    particle(x,y);
+    particle(x, y);
     active = false;
   }
 
-    void boom(PlayerBall thisBall, int x, int y) {
-    hit(thisBall,x,y);
+  void boom(PlayerBall thisBall, int x, int y) {
+    hit(thisBall, x, y);
   }
 
   void particle(int x, int y) {
-    particles.add(new Particle((x+0.5)*board.tileW,(y+0.5)*board.tileH, random(-10,10), random(-10,10), particleCol));
+    for (int i=0; i<4; i++) {
+      particles.add(new Particle((x+0.5)*board.tileW, (y+0.5)*board.tileH, random(-gameScreenSize/100, gameScreenSize/100), random(-gameScreenSize/100, gameScreenSize/100), particleCol));
+    }
   }
   Tile copy() {
     return new Tile();
@@ -53,11 +55,13 @@ class Tile타일이름 extends Tile {
   Tile타일이름() {
     tileInit(brickImg); //brickImg를 다른 PImage로 바꾸면 외형이 그 이미지로 나타남
     this.clearRequirement = false; //true면 이 타일을 깨야 클리어 판정, false면 이 타일은 안깨도 클리어 판정
+    particleCol = color(#707070); //파티클 색
   }
   void hit(PlayerBall thisBall, int x, int y) { //공이 닿았을때 행동, thisBall은 닿은 공 객체, x/y는 이 타일의 좌표
     if (active) { //활성화 (파괴 전) 상태면
       score++;
       //무언가 일어남
+      particle(x, y); //파티클 추가
       active = false; //이 타일을 파괴
     }
   }
@@ -89,6 +93,7 @@ class TileAddBall extends Tile {
       score++;
       coin.play();
       addBall(3);
+      particle(x, y); //파티클 추가
       active = false;
     }
   }
@@ -107,6 +112,7 @@ class TileMultiBall extends Tile {
       score++;
       coin.play();
       multiBall(2);
+      particle(x, y); //파티클 추가
       active = false;
     }
   }
@@ -133,6 +139,7 @@ class TileShield extends Tile {
       } else if (hitFrame != frameCount) {
         score++;
         hit.play();
+        particle(x, y); //파티클 추가
         active = false;
       }
     }
@@ -153,6 +160,7 @@ class TileSpeedBall extends Tile {
       score++;
       coin.play();
       addBall(2, 2*ballMaxSpeed, color(255, 255, 0));
+      particle(x, y); //파티클 추가
       active = false; //이 타일을 파괴
     }
   }
@@ -171,6 +179,7 @@ class TileBoom extends Tile {
     if (active) { //활성화 (파괴 전) 상태면
       score++;
       boom.play();
+      particle(x, y); //파티클 추가
       active = false;
       for (int boomX=-1; boomX<=1; boomX++) {
         for (int boomY=-1; boomY<=1; boomY++) {
@@ -194,12 +203,12 @@ class TileBoomOnly extends Tile {
     this.clearRequirement = false; //true면 이 타일을 깨야 클리어 판정, false면 이 타일은 안깨도 클리어 판정
   }
   void hit(PlayerBall thisBall, int x, int y) { //공이 닿았을때 행동, thisBall은 닿은 공 객체, x/y는 이 타일의 좌표
-    
   }
   void boom(PlayerBall thisBall, int x, int y) { //공이 닿았을때 행동, thisBall은 닿은 공 객체, x/y는 이 타일의 좌표
     if (active) { //활성화 (파괴 전) 상태면
       score++;
       //무언가 일어남
+      particle(x, y); //파티클 추가
       active = false; //이 타일을 파괴
     }
   }
