@@ -196,7 +196,7 @@ class TileBoom extends Tile {
   }
   void Boomparticle(int x, int y) {
     for (int i=0; i<15; i++) {
-      particles.add(new Particle((x+0.5)*board.tileW, (y+0.5)*board.tileH, random(-gameScreenSize/50, gameScreenSize/50), random(-gameScreenSize/50, gameScreenSize/50), color(255,0,0),2));
+      particles.add(new Particle((x+0.5)*board.tileW, (y+0.5)*board.tileH, random(-gameScreenSize/50, gameScreenSize/50), random(-gameScreenSize/50, gameScreenSize/50), color(255, 165, 0),2));
     }
   }
   TileBoom copy() { //맨 처음에 맵 생성할때 쓰이는 함수, 타일이름이 클래스에서의 이름이랑 같아야 함
