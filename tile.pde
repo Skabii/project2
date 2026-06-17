@@ -16,6 +16,7 @@ class Tile {
   PImage img;
   boolean active;
   boolean clearRequirement;
+  float hitTime;
   color particleCol;
   Tile() {
     tileInit(brickImg);
@@ -77,6 +78,7 @@ class TileBedrock extends Tile {
     clearRequirement = false;
   }
   void hit(PlayerBall thisBall, int x, int y) {
+    hitTime = frameCount;
   }
   TileBedrock copy() {
     return new TileBedrock();
@@ -208,6 +210,7 @@ class TileBoomOnly extends Tile {
     this.clearRequirement = false; //true면 이 타일을 깨야 클리어 판정, false면 이 타일은 안깨도 클리어 판정
   }
   void hit(PlayerBall thisBall, int x, int y) { //공이 닿았을때 행동, thisBall은 닿은 공 객체, x/y는 이 타일의 좌표
+    hitTime = frameCount;
   }
   void boom(PlayerBall thisBall, int x, int y) { //공이 닿았을때 행동, thisBall은 닿은 공 객체, x/y는 이 타일의 좌표
     if (active) { //활성화 (파괴 전) 상태면
