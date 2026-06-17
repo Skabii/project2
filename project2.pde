@@ -164,8 +164,6 @@ void draw() {
   if (gameState == 0 || gameState == 1 || gameState == 2) {
     imageMode(CENTER);
     image(gameGraphic, width/2, height/2, gameScreenSize, gameScreenSize);
-    textSize(64);
-    text(frameRate, 10, 64);
   }
 
   //hud render
