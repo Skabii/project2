@@ -93,7 +93,7 @@ void draw() {
   if (gameState == -1) { //leaderboard
     if (keyPulseState.getOrDefault(-1, false)) {
       gameState = 0;
-      currentLevel = 10;
+      currentLevel = 0;
       loadLevel(currentLevel);
       score = 0;
     }
